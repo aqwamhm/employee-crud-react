@@ -20,7 +20,7 @@
    VITE_BASE_URL=<BASE_URL>
    ```
 
-   Gantilah `<BASE_URL>` dengan URL API backend yang sesuai.
+   Gantilah `<BASE_URL>` dengan URL API backend yang sesuai. Jangan lupa untuk menambahkan endpoint /api pada base url, contoh: `http://localhost:8000/api`
 
 4. **Jalankan Aplikasi**
    ```bash
