@@ -7,9 +7,9 @@ import { AuthContext } from "../context/AuthContext";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login } = useContext(AuthContext);
+  const [errorMessage, setErrorMessage] = useState("");
+  const { login, verifyTokenIsValid } = useContext(AuthContext);
   const navigate = useNavigate();
-  const { verifyTokenIsValid } = useContext(AuthContext);
 
   useEffect(() => {
     const verify = async () => {
@@ -17,7 +17,7 @@ const Login = () => {
     };
 
     verify();
-  }, []);
+  }, [verifyTokenIsValid]);
 
   const loginHandler = async (e) => {
     e.preventDefault();
@@ -33,16 +33,22 @@ const Login = () => {
 
       const { token } = response.data;
       login(token);
-
       navigate("/");
     } catch (error) {
-      console.error("Login failed:", error);
+      setErrorMessage(
+        error.response.data.message || "Login failed. Please try again."
+      );
     }
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-blue-50">
       <Card className="w-full max-w-md p-6 bg-white shadow-lg rounded-lg">
+        {errorMessage && (
+          <div className="mb-4 py-5 bg-red-100 text-red-600 font-semibold text-center rounded-md">
+            {errorMessage}
+          </div>
+        )}
         <h2 className="text-2xl font-semibold mb-6 text-gray-700">Login</h2>
         <form className="space-y-4" onSubmit={loginHandler}>
           <div>
