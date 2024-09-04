@@ -169,34 +169,32 @@ const EmployeeForm = () => {
             />
           </div>
         </div>
-        <div className="flex gap-4">
-          {activeEmployee ? (
-            <>
-              <button
-                type="button"
-                onClick={handleCancel}
-                className="w-full py-2 bg-gray-500 text-white font-semibold rounded-md shadow-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 transition duration-200"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                onClick={handleSave}
-                className="w-full py-2 bg-blue-500 text-white font-semibold rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
-              >
-                Save
-              </button>
-            </>
-          ) : (
+        {activeEmployee ? (
+          <>
             <button
               type="submit"
               onClick={handleSave}
-              className="w-full py-2 bg-blue-500 text-white font-semibold rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
+              className="py-2 px-5 bg-blue-500 text-white font-semibold rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 mr-3"
             >
-              Add
+              Save
             </button>
-          )}
-        </div>
+            <button
+              type="button"
+              onClick={handleCancel}
+              className="py-2 px-5 bg-slate-500 text-white font-semibold rounded-md shadow-md hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-500 transition duration-200"
+            >
+              Cancel
+            </button>
+          </>
+        ) : (
+          <button
+            type="submit"
+            onClick={handleSave}
+            className="py-2 px-5 bg-blue-500 text-white font-semibold rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
+          >
+            Add
+          </button>
+        )}
       </form>
     </Card>
   );
