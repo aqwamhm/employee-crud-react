@@ -24,6 +24,7 @@ function EmployeeTable() {
 
   const handleEdit = (employee) => {
     setActiveEmployee(employee);
+    window.scrollTo({ top: 100, behavior: "smooth" });
   };
 
   const filteredEmployees = employees.filter((employee) => {
