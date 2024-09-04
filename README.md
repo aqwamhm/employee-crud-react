@@ -3,8 +3,8 @@
 1. **Clone Repository**
 
    ```bash
-   git clone <URL_REPOSITORY_FRONTEND>
-   cd <NAMA_FOLDER_FRONTEND>
+   git clone https://github.com/aqwamhm/employee-crud-react.git
+   cd employee-crud-react
    ```
 
 2. **Install Dependencies**
