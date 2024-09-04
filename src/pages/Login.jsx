@@ -29,13 +29,10 @@ const Login = () => {
     setError("");
 
     try {
-      const response = await api.post(
-        "http://employee-crud-api.test/api/auth/login",
-        {
-          email,
-          password,
-        }
-      );
+      const response = await api.post("auth/login", {
+        email,
+        password,
+      });
 
       const { token, user } = response.data;
       login(token, user.is_superadmin);

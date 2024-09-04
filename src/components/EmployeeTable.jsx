@@ -13,7 +13,7 @@ function EmployeeTable() {
   const deleteEmployee = async (id) => {
     verifyTokenIsValid();
 
-    await api.delete(`http://employee-crud-api.test/api/employees/${id}`, {
+    await api.delete(`employees/${id}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },

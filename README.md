@@ -3,8 +3,8 @@
 1. **Clone Repository**
 
    ```bash
-   git clone <URL_REPOSITORY_FRONTEND>
-   cd <NAMA_FOLDER_FRONTEND>
+   git clone https://github.com/aqwamhm/employee-crud-react.git
+   cd employee-crud-react
    ```
 
 2. **Install Dependencies**
@@ -17,7 +17,7 @@
    Buat file `.env` di root folder dan tambahkan konfigurasi berikut:
 
    ```plaintext
-   REACT_APP_BASE_URL=<BASE_URL>
+   VITE_BASE_URL=<BASE_URL>
    ```
 
    Gantilah `<BASE_URL>` dengan URL API backend yang sesuai.

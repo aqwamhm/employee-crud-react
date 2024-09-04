@@ -8,7 +8,7 @@ const Header = ({ title }) => {
 
   const handleLogout = async () => {
     try {
-      await api.post("http://employee-crud-api.test/api/auth/logout", null, {
+      await api.post("auth/logout", null, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },

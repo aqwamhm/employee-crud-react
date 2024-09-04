@@ -20,9 +20,8 @@ export const EmployeesProvider = ({ children }) => {
   const fetchEmployees = async () => {
     const is_superadmin = localStorage.getItem("is_superadmin");
 
-    const superadminEndpoint =
-      "http://employee-crud-api.test/api/employees/sortedBySalary";
-    const adminEndpoint = "http://employee-crud-api.test/api/employees";
+    const superadminEndpoint = "employees/sortedBySalary";
+    const adminEndpoint = "employees";
     const endpoint = is_superadmin == 1 ? superadminEndpoint : adminEndpoint;
     try {
       const response = await api.get(endpoint, {
@@ -38,14 +37,11 @@ export const EmployeesProvider = ({ children }) => {
 
   const fetchPositions = async () => {
     try {
-      const response = await api.get(
-        "http://employee-crud-api.test/api/positions",
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      const response = await api.get("positions", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       setPositions(response.data.data);
     } catch (error) {
       console.error("Failed to fetch positions:", error);

@@ -22,14 +22,11 @@ export const TokenProvider = ({ children }) => {
 
   const verifyTokenIsValid = async () => {
     try {
-      const response = await api.get(
-        "http://employee-crud-api.test/api/auth/verifyToken",
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      const response = await api.get("auth/verifyToken", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
 
       localStorage.setItem("token", response.data.token);
 

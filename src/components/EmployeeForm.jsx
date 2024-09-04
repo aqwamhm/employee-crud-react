@@ -47,25 +47,17 @@ const EmployeeForm = () => {
 
     try {
       if (activeEmployee) {
-        await api.put(
-          `http://employee-crud-api.test/api/employees/${activeEmployee.id}`,
-          employeeData,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
+        await api.put(`employees/${activeEmployee.id}`, employeeData, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
       } else {
-        await api.post(
-          "http://employee-crud-api.test/api/employees",
-          employeeData,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
+        await api.post("employees", employeeData, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
       }
 
       setName("");
