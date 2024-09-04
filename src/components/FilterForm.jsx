@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import Card from "./Card";
+import Input from "./Input";
 import { EmployeesContext } from "../context/EmployeesContext";
 
 function FilterForm() {
@@ -10,18 +11,42 @@ function FilterForm() {
   const [position, setPosition] = useState(filterEmployee.position);
   const [minSalary, setMinSalary] = useState(filterEmployee.minSalary);
   const [maxSalary, setMaxSalary] = useState(filterEmployee.maxSalary);
+  const [errors, setErrors] = useState({});
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (minSalary && isNaN(minSalary)) {
+      newErrors.minSalary = "Min salary must be a number.";
+    }
+
+    if (maxSalary && isNaN(maxSalary)) {
+      newErrors.maxSalary = "Max salary must be a number.";
+    }
+
+    if (
+      minSalary &&
+      maxSalary &&
+      parseFloat(minSalary) > parseFloat(maxSalary)
+    ) {
+      newErrors.maxSalary = "Max salary must be greater than min salary.";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleFilter = (e) => {
     e.preventDefault();
 
-    setFilterEmployee({
-      name,
-      position,
-      minSalary,
-      maxSalary,
-    });
-
-    console.log(filterEmployee);
+    if (validateForm()) {
+      setFilterEmployee({
+        name,
+        position,
+        minSalary,
+        maxSalary,
+      });
+    }
   };
 
   const handleClearFilter = (e) => {
@@ -33,90 +58,62 @@ function FilterForm() {
     setPosition(defaultFilter.position);
     setMinSalary(defaultFilter.minSalary);
     setMaxSalary(defaultFilter.maxSalary);
+    setErrors({});
   };
 
   return (
     <Card className="p-6 mb-6">
       <form>
         <h2 className="text-lg font-bold mb-4">Filter Employees</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
-          <div>
-            <label
-              htmlFor="searchName"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Search Name
-            </label>
-            <input
-              type="text"
-              id="searchName"
-              name="searchName"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Enter name"
-              className="bg-gray-50 mt-1 p-2 block w-full rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 outline-none sm:text-sm"
-            />
-          </div>
+        <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 mb-4">
+          <Input
+            label="Search Name"
+            id="searchName"
+            name="searchName"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Enter name"
+            error={errors.name}
+          />
 
-          <div>
-            <label
-              htmlFor="filterPosition"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Filter by Position
-            </label>
-            <select
-              id="filterPosition"
-              name="filterPosition"
-              value={position}
-              onChange={(e) => setPosition(e.target.value)}
-              className="bg-gray-50 mt-1 p-2 block w-full rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 outline-none sm:text-sm"
-            >
-              <option value="">All Positions</option>
-              {positions.map((position) => (
-                <option key={position.id} value={position.id}>
-                  {position.name}
-                </option>
-              ))}
-            </select>
-          </div>
+          <Input
+            label="Filter by Position"
+            id="filterPosition"
+            name="filterPosition"
+            as="select"
+            value={position}
+            onChange={(e) => setPosition(e.target.value)}
+            error={errors.position}
+          >
+            <option value="">All Positions</option>
+            {positions.map((position) => (
+              <option key={position.id} value={position.id}>
+                {position.name}
+              </option>
+            ))}
+          </Input>
 
-          <div className="flex gap-4">
-            <div className="flex-1">
-              <label
-                htmlFor="minSalary"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Min Salary
-              </label>
-              <input
-                type="number"
-                id="minSalary"
-                name="minSalary"
-                value={minSalary}
-                onChange={(e) => setMinSalary(e.target.value)}
-                placeholder="Min salary"
-                className="bg-gray-50 mt-1 p-2 block w-full rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 outline-none sm:text-sm"
-              />
-            </div>
-            <div className="flex-1">
-              <label
-                htmlFor="maxSalary"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Max Salary
-              </label>
-              <input
-                type="number"
-                id="maxSalary"
-                name="maxSalary"
-                value={maxSalary}
-                onChange={(e) => setMaxSalary(e.target.value)}
-                placeholder="Max salary"
-                className="bg-gray-50 mt-1 p-2 block w-full rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 outline-none sm:text-sm"
-              />
-            </div>
-          </div>
+          <Input
+            label="Min Salary"
+            id="minSalary"
+            name="minSalary"
+            type="number"
+            value={minSalary}
+            onChange={(e) => setMinSalary(e.target.value)}
+            placeholder="Min salary"
+            error={errors.minSalary}
+          />
+
+          <Input
+            label="Max Salary"
+            id="maxSalary"
+            name="maxSalary"
+            type="number"
+            value={maxSalary}
+            onChange={(e) => setMaxSalary(e.target.value)}
+            placeholder="Max salary"
+            error={errors.maxSalary}
+          />
         </div>
         <button
           type="submit"
