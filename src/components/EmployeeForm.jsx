@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import Card from "./Card";
-import axios from "axios";
+import api from "../services/api";
 import { EmployeesContext } from "../context/EmployeesContext";
 import { AuthContext } from "../context/AuthContext";
 import Input from "./Input";
@@ -47,7 +47,7 @@ const EmployeeForm = () => {
 
     try {
       if (activeEmployee) {
-        await axios.put(
+        await api.put(
           `http://employee-crud-api.test/api/employees/${activeEmployee.id}`,
           employeeData,
           {
@@ -57,7 +57,7 @@ const EmployeeForm = () => {
           }
         );
       } else {
-        await axios.post(
+        await api.post(
           "http://employee-crud-api.test/api/employees",
           employeeData,
           {

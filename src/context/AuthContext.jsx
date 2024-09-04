@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../services/api";
 import { createContext, useState } from "react";
 
 export const AuthContext = createContext();
@@ -22,7 +22,7 @@ export const TokenProvider = ({ children }) => {
 
   const verifyTokenIsValid = async () => {
     try {
-      const response = await axios.get(
+      const response = await api.get(
         "http://employee-crud-api.test/api/auth/verifyToken",
         {
           headers: {

@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import Card from "./Card";
-import axios from "axios";
+import api from "../services/api";
 import { EmployeesContext } from "../context/EmployeesContext";
 import { AuthContext } from "../context/AuthContext";
 
@@ -13,7 +13,7 @@ function EmployeeTable() {
   const deleteEmployee = async (id) => {
     verifyTokenIsValid();
 
-    await axios.delete(`http://employee-crud-api.test/api/employees/${id}`, {
+    await api.delete(`http://employee-crud-api.test/api/employees/${id}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },

@@ -1,7 +1,7 @@
 import Card from "../components/Card";
 import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../services/api";
 import { AuthContext } from "../context/AuthContext";
 import Input from "../components/Input";
 
@@ -29,7 +29,7 @@ const Login = () => {
     setError("");
 
     try {
-      const response = await axios.post(
+      const response = await api.post(
         "http://employee-crud-api.test/api/auth/login",
         {
           email,

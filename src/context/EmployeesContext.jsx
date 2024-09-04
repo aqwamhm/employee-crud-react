@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import axios from "axios";
+import api from "../services/api";
 
 export const EmployeesContext = createContext();
 
@@ -25,7 +25,7 @@ export const EmployeesProvider = ({ children }) => {
     const adminEndpoint = "http://employee-crud-api.test/api/employees";
     const endpoint = is_superadmin == 1 ? superadminEndpoint : adminEndpoint;
     try {
-      const response = await axios.get(endpoint, {
+      const response = await api.get(endpoint, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -38,7 +38,7 @@ export const EmployeesProvider = ({ children }) => {
 
   const fetchPositions = async () => {
     try {
-      const response = await axios.get(
+      const response = await api.get(
         "http://employee-crud-api.test/api/positions",
         {
           headers: {
