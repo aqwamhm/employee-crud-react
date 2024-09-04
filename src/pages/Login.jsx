@@ -37,8 +37,8 @@ const Login = () => {
         }
       );
 
-      const { token } = response.data;
-      login(token);
+      const { token, user } = response.data;
+      login(token, user.is_superadmin);
 
       navigate("/");
     } catch (error) {

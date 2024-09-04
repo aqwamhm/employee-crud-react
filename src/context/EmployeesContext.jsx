@@ -6,7 +6,6 @@ export const EmployeesContext = createContext();
 export const EmployeesProvider = ({ children }) => {
   const [employees, setEmployees] = useState([]);
   const [activeEmployee, setActiveEmployee] = useState(null);
-
   const [positions, setPositions] = useState([]);
 
   const defaultFilter = {
@@ -19,18 +18,21 @@ export const EmployeesProvider = ({ children }) => {
   const [filterEmployee, setFilterEmployee] = useState(defaultFilter);
 
   const fetchEmployees = async () => {
+    const is_superadmin = localStorage.getItem("is_superadmin");
+
+    const superadminEndpoint =
+      "http://employee-crud-api.test/api/employees/sortedBySalary";
+    const adminEndpoint = "http://employee-crud-api.test/api/employees";
+    const endpoint = is_superadmin == 1 ? superadminEndpoint : adminEndpoint;
     try {
-      const response = await axios.get(
-        "http://employee-crud-api.test/api/employees",
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      const response = await axios.get(endpoint, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       setEmployees(response.data.data);
     } catch (error) {
-      console.error("Failed to fetch employees:", error);
+      console.log(error);
     }
   };
 

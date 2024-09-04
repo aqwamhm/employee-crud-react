@@ -1,12 +1,21 @@
 import { useContext } from "react";
 import Container from "./Container";
 import { AuthContext } from "../context/AuthContext";
+import axios from "axios";
 
 const Header = ({ title }) => {
   const { logout } = useContext(AuthContext);
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    try {
+      await axios.post("http://employee-crud-api.test/api/auth/logout", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+    } finally {
+      logout();
+    }
   };
 
   return (

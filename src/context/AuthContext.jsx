@@ -8,13 +8,15 @@ export const TokenProvider = ({ children }) => {
     () => !!localStorage.getItem("token")
   );
 
-  const login = (newToken) => {
+  const login = (newToken, is_superadmin) => {
     localStorage.setItem("token", newToken);
+    localStorage.setItem("is_superadmin", is_superadmin);
     setTokenIsValid(true);
   };
 
   const logout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("is_superadmin");
     setTokenIsValid(false);
   };
 
