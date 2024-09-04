@@ -25,8 +25,8 @@ const Home = () => {
     <>
       <Header title="Employee Management" />
       <Container>
-        <FilterForm />
         <EmployeeForm />
+        <FilterForm />
         <EmployeeTable />
       </Container>
     </>

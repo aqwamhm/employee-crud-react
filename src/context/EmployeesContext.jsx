@@ -13,7 +13,7 @@ export const EmployeesProvider = ({ children }) => {
     name: "",
     position: "",
     minSalary: 0,
-    maxSalary: 100000,
+    maxSalary: 999999,
   };
 
   const [filterEmployee, setFilterEmployee] = useState(defaultFilter);
