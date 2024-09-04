@@ -1,8 +1,28 @@
-# React + Vite
+### Panduan Instalasi Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+1. **Clone Repository**
 
-Currently, two official plugins are available:
+   ```bash
+   git clone <URL_REPOSITORY_FRONTEND>
+   cd <NAMA_FOLDER_FRONTEND>
+   ```
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+2. **Install Dependencies**
+
+   ```bash
+   npm install
+   ```
+
+3. **Konfigurasi Environment**
+   Buat file `.env` di root folder dan tambahkan konfigurasi berikut:
+
+   ```plaintext
+   REACT_APP_BASE_URL=<BASE_URL>
+   ```
+
+   Gantilah `<BASE_URL>` dengan URL API backend yang sesuai.
+
+4. **Jalankan Aplikasi**
+   ```bash
+   npm run dev
+   ```
