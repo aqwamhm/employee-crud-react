@@ -3,12 +3,15 @@ import Card from "./Card";
 import axios from "axios";
 import { EmployeesContext } from "../context/EmployeesContext";
 import { AuthContext } from "../context/AuthContext";
+import Input from "./Input";
 
 const EmployeeForm = () => {
   const [name, setName] = useState("");
   const [position, setPosition] = useState("");
   const [email, setEmail] = useState("");
   const [salary, setSalary] = useState("");
+
+  const [errors, setErrors] = useState({});
 
   const { positions, fetchEmployees, activeEmployee, setActiveEmployee } =
     useContext(EmployeesContext);
@@ -27,6 +30,7 @@ const EmployeeForm = () => {
       setEmail("");
       setSalary("");
     }
+    setErrors({});
   }, [activeEmployee]);
 
   const handleSave = async (e) => {
@@ -69,10 +73,15 @@ const EmployeeForm = () => {
       setEmail("");
       setSalary("");
       setActiveEmployee(null);
+      setErrors({});
 
       await fetchEmployees();
     } catch (error) {
-      console.error("Failed to save employee:", error);
+      if (error.response && error.response.status === 422) {
+        setErrors(error.response.data.errors);
+      } else {
+        console.error("Failed to save employee:", error);
+      }
     }
   };
 
@@ -83,6 +92,7 @@ const EmployeeForm = () => {
     setEmail("");
     setSalary("");
     setActiveEmployee(null);
+    setErrors({});
   };
 
   return (
@@ -92,82 +102,54 @@ const EmployeeForm = () => {
           {activeEmployee ? "Edit Employee" : "Add New Employee"}
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 mb-4">
-          <div>
-            <label
-              htmlFor="name"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              placeholder="Enter name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="bg-gray-50 mt-1 p-2 block w-full rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 outline-none sm:text-sm"
-            />
-          </div>
+          <Input
+            label="Name"
+            id="name"
+            name="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Enter name"
+            error={errors.name ? errors.name[0] : ""}
+          />
 
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Enter email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="bg-gray-50 mt-1 p-2 block w-full rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 outline-none sm:text-sm"
-            />
-          </div>
+          <Input
+            label="Email"
+            id="email"
+            name="email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Enter email"
+            error={errors.email ? errors.email[0] : ""}
+          />
 
-          <div>
-            <label
-              htmlFor="position"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Position
-            </label>
-            <select
-              id="position"
-              name="position"
-              value={position}
-              onChange={(e) => setPosition(e.target.value)}
-              className="bg-gray-50 mt-1 p-2 block w-full rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 outline-none sm:text-sm"
-            >
-              {!activeEmployee ? <option value="">Select Position</option> : ""}
-              {positions.map((position) => (
-                <option key={position.id} value={position.id}>
-                  {position.name}
-                </option>
-              ))}
-            </select>
-          </div>
+          <Input
+            label="Position"
+            id="position"
+            name="position"
+            as="select"
+            value={position}
+            onChange={(e) => setPosition(e.target.value)}
+            error={errors.position_id ? errors.position_id[0] : ""}
+          >
+            {!activeEmployee ? <option value="">Select Position</option> : ""}
+            {positions.map((position) => (
+              <option key={position.id} value={position.id}>
+                {position.name}
+              </option>
+            ))}
+          </Input>
 
-          <div>
-            <label
-              htmlFor="salary"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Salary
-            </label>
-            <input
-              type="number"
-              id="salary"
-              name="salary"
-              placeholder="Salary"
-              value={salary}
-              onChange={(e) => setSalary(e.target.value)}
-              className="bg-gray-50 mt-1 p-2 block w-full rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 outline-none sm:text-sm"
-            />
-          </div>
+          <Input
+            label="Salary"
+            id="salary"
+            name="salary"
+            type="number"
+            value={salary}
+            onChange={(e) => setSalary(e.target.value)}
+            placeholder="Enter salary"
+            error={errors.salary ? errors.salary[0] : ""}
+          />
         </div>
         {activeEmployee ? (
           <>
