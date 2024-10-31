@@ -1,6 +1,9 @@
-### Panduan Instalasi Frontend
+### Backend Setup
+Before running the frontend application, ensure that the backend is properly set up. Follow the instructions in the [backend repository](https://github.com/aqwamhm/employee-crud-backend) to clone, configure, and run the backend server.
 
-1. **Clone Repository**
+### Frontend Installation Guide
+
+1. **Clone the Repository**
 
    ```bash
    git clone https://github.com/aqwamhm/employee-crud-react.git
@@ -13,16 +16,16 @@
    npm install
    ```
 
-3. **Konfigurasi Environment**
-   Buat file `.env` di root folder dan tambahkan konfigurasi berikut:
+3. **Environment Configuration**
+   Create a `.env` file in the root folder and add the following configuration:
 
    ```plaintext
    VITE_BASE_URL=<BASE_URL>
    ```
 
-   Gantilah `<BASE_URL>` dengan URL API backend yang sesuai. Jangan lupa untuk menambahkan endpoint /api pada base url, contoh: `http://localhost:8000/api`
+   Replace `<BASE_URL>` with the appropriate backend API URL. Don't forget to include the /api endpoint in the base URL, for example: `http://localhost:8000/api`
 
-4. **Jalankan Aplikasi**
+4. **Run the Application**
    ```bash
    npm run dev
    ```
